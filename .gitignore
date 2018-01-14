@@ -1,0 +1,9 @@
+venv
+*.pyc
+staticfiles
+.env
+
+settings_secret.py
+
+.idea
+*.iml
