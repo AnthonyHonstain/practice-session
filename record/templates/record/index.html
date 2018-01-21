@@ -1,0 +1,12 @@
+{% load static %}
+
+
+{% if practice_session_list %}
+<ul>
+    {% for practice_session in practice_session_list %}
+    <li><a href=""> {{ practice_session.type }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No practice sessions are available.</p>
+{% endif %}
