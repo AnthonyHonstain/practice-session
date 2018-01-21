@@ -4,6 +4,7 @@ from .common import *
 # SECRET CONFIGURATION
 # A special file to contain login/secret info not stored in the public repo
 from .settings_secret import *
+
 # END SECRET CONFIGURATION
 # ---------------------------------------------------------------------------
 
