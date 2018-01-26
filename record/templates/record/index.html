@@ -1,12 +1,36 @@
 {% load static %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'record/style.css' %}" />
 
+
+<h1>Start New Practice Session</h1>
+<form action="{% url 'record:create' %}" method="post">
+    {% csrf_token %}
+
+    <label for="practiceType">Practice Type</label>
+    <input type="text" name="practiceType" id="practiceType" value=""/>
+
+    <label for="start">Start Time</label>
+    <input type="datetime-local" name="start" id="start" value=""/>
+
+    <br/>
+    <input type="submit" value="Start"/>
+</form>
+
+<h1>Previous Practice Sessions</h1>
 {% if practice_session_list %}
-<ul>
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Start</th>
+    </tr>
     {% for practice_session in practice_session_list %}
-    <li><a href=""> {{ practice_session.type }}</a></li>
+    <tr>
+        <td><a href=""> {{ practice_session.type }}</a></td>
+        <td>{{ practice_session.start }}</td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
 {% else %}
 <p>No practice sessions are available.</p>
 {% endif %}
