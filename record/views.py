@@ -15,6 +15,8 @@ class IndexView(generic.ListView):
 
 
 def createPracticeSession(request):
+  print("TODO - logging framework - practiceType:{0} start:{1}".format(request.POST['practiceType'], request.POST['start']))
+
   practice_session = PracticeSession()
   practice_session.type = request.POST['practiceType']
   practice_session.start = request.POST['start']

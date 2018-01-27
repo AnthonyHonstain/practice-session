@@ -1,8 +1,25 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'record/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'record/starter-template.css' %}" />
 
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
 <h1>Start New Practice Session</h1>
 <form action="{% url 'record:create' %}" method="post">
     {% csrf_token %}
@@ -19,18 +36,29 @@
 
 <h1>Previous Practice Sessions</h1>
 {% if practice_session_list %}
-<table>
+<table class="table">
+    <thead class="thead-dark">
     <tr>
-        <th>Type</th>
-        <th>Start</th>
+        <th scope="col">Type</th>
+        <th scope="col">Start</th>
     </tr>
+    </thead>
+    <tbody>
     {% for practice_session in practice_session_list %}
     <tr>
-        <td><a href=""> {{ practice_session.type }}</a></td>
+        <td scope="row"><a href=""> {{ practice_session.type }}</a></td>
         <td>{{ practice_session.start }}</td>
     </tr>
     {% endfor %}
+    </tbody>
 </table>
 {% else %}
 <p>No practice sessions are available.</p>
 {% endif %}
+
+<!-- Bootstrap core JavaScript ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</main>
+</body>
