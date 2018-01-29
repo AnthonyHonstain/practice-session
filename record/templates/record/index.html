@@ -20,45 +20,69 @@
 </nav>
 
 <main role="main" class="container">
-<h1>Start New Practice Session</h1>
-<form action="{% url 'record:create' %}" method="post">
-    {% csrf_token %}
 
-    <label for="practiceType">Practice Type</label>
-    <input type="text" name="practiceType" id="practiceType" value=""/>
+    <h1>Quick Start</h1>
+    <form name="quickSubmit" action="{% url 'record:createQuick' %}" method="post" onsubmit="DoSubmit();">
+        {% csrf_token %}
 
-    <label for="start">Start Time</label>
-    <input type="datetime-local" name="start" id="start" value=""/>
+        <label for="practiceTypeQuick">Practice Type</label>
+        <input type="text" name="practiceTypeQuick" id="practiceTypeQuick" value=""/>
 
-    <br/>
-    <input type="submit" value="Start"/>
-</form>
+        <input type="hidden" name="startQuick" id="startQuick" value=""/>
 
-<h1>Previous Practice Sessions</h1>
-{% if practice_session_list %}
-<table class="table">
-    <thead class="thead-dark">
-    <tr>
-        <th scope="col">Type</th>
-        <th scope="col">Start</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for practice_session in practice_session_list %}
-    <tr>
-        <td scope="row"><a href=""> {{ practice_session.type }}</a></td>
-        <td>{{ practice_session.start }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>No practice sessions are available.</p>
-{% endif %}
+        <input type="submit" class="btn btn-primary" value="Start"/>
+    </form>
+
+
+    <h1>Previous Practice Sessions</h1>
+    {% if practice_session_list %}
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Start</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for practice_session in practice_session_list %}
+        <tr>
+            <td scope="row"><a href=""> {{ practice_session.type }}</a></td>
+            <td>{{ practice_session.start }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No practice sessions are available.</p>
+    {% endif %}
+
+
+    <h1>Start New Practice Session</h1>
+    <form action="{% url 'record:create' %}" method="post">
+        {% csrf_token %}
+
+        <label for="practiceType">Practice Type</label>
+        <input type="text" name="practiceType" id="practiceType" value=""/>
+
+        <label for="start">Start Time</label>
+        <input type="datetime-local" name="start" id="start" value=""/>
+
+        <input type="submit" class="btn btn-primary" value="Start"/>
+    </form>
+
 
 <!-- Bootstrap core JavaScript ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script>
+    function DoSubmit() {
+      document.quickSubmit.startQuick.value = moment().toISOString();
+      console.log("Test moment.js startQuick:", document.quickSubmit.startQuick);
+      return true;
+    }
+
+</script>
 </main>
 </body>

@@ -14,7 +14,19 @@ class IndexView(generic.ListView):
     return PracticeSession.objects.all()
 
 
-def createPracticeSession(request):
+def create_practice_session_quick(request):
+  print("TODO - logging framework - practiceTypeQuick:{0} startQuick:{1}"
+        .format(request.POST['practiceTypeQuick'], request.POST['startQuick']))
+
+  practice_session = PracticeSession()
+  practice_session.type = request.POST['practiceTypeQuick']
+  practice_session.start = request.POST['startQuick']
+  #practice_session.finish = request.POST['finish']
+  practice_session.save()
+  return HttpResponseRedirect(reverse('record:index'))
+
+
+def create_practice_session(request):
   print("TODO - logging framework - practiceType:{0} start:{1}".format(request.POST['practiceType'], request.POST['start']))
 
   practice_session = PracticeSession()
