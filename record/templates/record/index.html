@@ -41,13 +41,15 @@
         <tr>
             <th scope="col">Type</th>
             <th scope="col">Start</th>
+            <th scope="col">Finish</th>
         </tr>
         </thead>
         <tbody>
         {% for practice_session in practice_session_list %}
         <tr>
-            <td scope="row"><a href=""> {{ practice_session.type }}</a></td>
+            <td scope="row"><a href="{% url 'record:detail' practice_session.id %}"> {{ practice_session.type }}</a></td>
             <td>{{ practice_session.start }}</td>
+            <td>{{ practice_session.finish }}</td>
         </tr>
         {% endfor %}
         </tbody>

@@ -1,0 +1,110 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'record/starter-template.css' %}" />
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+
+    <h1>Practice Session - {{ practice_session.type }}</h1>
+    <div id="startTimeRaw">{{ practice_session.start|date:"c" }}</div>
+    <p>Active for: <span id="minutes">00</span>:<span id="seconds">00</span>:<span id="tens">00</span></p>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td scope="row">Type</td>
+                <td>{{ practice_session.type }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Start</td>
+                <td>{{ practice_session.start }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Finish</td>
+                <td>{{ practice_session.finish }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+<!-- Bootstrap core JavaScript ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/moment.min.js' %}"></script>
+
+<script>
+    window.onload = function () {
+      var appendMinutes = document.getElementById("minutes");
+      var appendSeconds = document.getElementById("seconds");
+      var appendTens = document.getElementById("tens");
+
+      // We want to calculate the time since the practice session started to get the stopwatch
+      // behavior started as if it had been running the whole time for the user
+      var start = moment(document.getElementById("startTimeRaw").innerText);
+      var now = moment();
+      var timeDiff = now.diff(start);
+
+      var minutes = Math.floor(timeDiff / 1000 / 60);
+      var seconds = Math.floor(((timeDiff / 1000 / 60) - minutes) * 60);
+      var tens = 00;
+      appendMinutes.innerText = "" + minutes;
+      appendSeconds.innerText = "" + seconds;
+
+      setInterval(startTimer, 10);
+
+      function startTimer () {
+        tens++;
+
+        if(tens <= 9){
+          appendTens.innerHTML = "0" + tens;
+        }
+
+        if (tens > 9){
+          appendTens.innerHTML = tens;
+
+        }
+        if (tens > 99) {
+          //console.log("seconds");
+          seconds++;
+          appendSeconds.innerText = "0" + seconds;
+          tens = 0;
+          appendTens.innerText = "00";
+        }
+
+        if (seconds > 9) {
+          appendSeconds.innerText = "" + seconds;
+        }
+
+        if (seconds > 59) {
+          //console.log("minutes");
+          minutes++;
+          appendMinutes.innerText = "" + minutes;
+          seconds = 0;
+          appendSeconds.innerText = "00";
+        }
+
+        if (minutes > 9) {
+          appendMinutes.innerText = "" + minutes;
+        }
+      };
+    }
+</script>
+
+</main>
+</body>
