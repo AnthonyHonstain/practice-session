@@ -23,7 +23,7 @@
 
     <h1>Practice Session - {{ practice_session.type }}</h1>
     <div id="startTimeRaw">{{ practice_session.start|date:"c" }}</div>
-    <p>Active for: <span id="minutes">00</span>:<span id="seconds">00</span>:<span id="tens">00</span></p>
+    <p>Active for: <span id="minutes">0</span>:<span id="seconds">00</span>:<span id="tens">00</span></p>
     <table class="table">
         <tbody>
             <tr>
@@ -64,7 +64,11 @@
       var seconds = Math.floor(((timeDiff / 1000 / 60) - minutes) * 60);
       var tens = 00;
       appendMinutes.innerText = "" + minutes;
-      appendSeconds.innerText = "" + seconds;
+      if (seconds < 10) {
+        appendSeconds.innerText = "0" + seconds;
+      } else {
+        appendSeconds.innerText = "" + seconds;
+      }
 
       setInterval(startTimer, 10);
 
