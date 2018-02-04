@@ -5,7 +5,7 @@
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="{% url 'record:index' %}">PracticeSession</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,8 +22,22 @@
 <main role="main" class="container">
 
     <h1>Practice Session - {{ practice_session.type }}</h1>
-    <div id="startTimeRaw">{{ practice_session.start|date:"c" }}</div>
-    <p>Active for: <span id="minutes">0</span>:<span id="seconds">00</span>:<span id="tens">00</span></p>
+
+    {% if not practice_session.finish %}
+    <div id="startTimeRaw" hidden>{{ practice_session.start|date:"c" }}</div>
+    <div class="card box-shadow mb-3" style="max-width: 30rem">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Active Session</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title"><span id="minutes">0</span>m:<span id="seconds">00</span>s:<span id="tens">00</span></h1>
+            <a href="{% url 'record:finishNow' practice_session.id %}">
+                <button type="button" class="btn btn-lg btn-block btn-primary"><i class="fas fa-stop-circle fa-lg"></i> Finish</button>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
     <table class="table">
         <tbody>
             <tr>
@@ -36,7 +50,9 @@
             </tr>
             <tr>
                 <td scope="row">Finish</td>
-                <td>{{ practice_session.finish }}</td>
+                <td>
+                    {{ practice_session.finish }}
+                </td>
             </tr>
         </tbody>
     </table>
@@ -47,6 +63,8 @@
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/fontawesome-all.min.js' %}"></script>
+
 
 <script>
     window.onload = function () {
@@ -54,23 +72,26 @@
       var appendSeconds = document.getElementById("seconds");
       var appendTens = document.getElementById("tens");
 
-      // We want to calculate the time since the practice session started to get the stopwatch
-      // behavior started as if it had been running the whole time for the user
-      var start = moment(document.getElementById("startTimeRaw").innerText);
-      var now = moment();
-      var timeDiff = now.diff(start);
+      var startTimeRaw = document.getElementById("startTimeRaw");
+      if (startTimeRaw != null) {
+        // We want to calculate the time since the practice session started to get the stopwatch
+        // behavior started as if it had been running the whole time for the user
+        var start = moment(document.getElementById("startTimeRaw").innerText);
+        var now = moment();
+        var timeDiff = now.diff(start);
 
-      var minutes = Math.floor(timeDiff / 1000 / 60);
-      var seconds = Math.floor(((timeDiff / 1000 / 60) - minutes) * 60);
-      var tens = 00;
-      appendMinutes.innerText = "" + minutes;
-      if (seconds < 10) {
-        appendSeconds.innerText = "0" + seconds;
-      } else {
-        appendSeconds.innerText = "" + seconds;
+        var minutes = Math.floor(timeDiff / 1000 / 60);
+        var seconds = Math.floor(((timeDiff / 1000 / 60) - minutes) * 60);
+        var tens = 00;
+        appendMinutes.innerText = "" + minutes;
+        if (seconds < 10) {
+          appendSeconds.innerText = "0" + seconds;
+        } else {
+          appendSeconds.innerText = "" + seconds;
+        }
+
+        setInterval(startTimer, 10);
       }
-
-      setInterval(startTimer, 10);
 
       function startTimer () {
         tens++;

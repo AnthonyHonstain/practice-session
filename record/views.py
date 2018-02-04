@@ -1,6 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.urls import reverse
+from django.utils.timezone import utc
+import datetime
 
 from record.models import PracticeSession
 
@@ -46,3 +49,11 @@ def create_practice_session(request):
   practice_session.save()
   return HttpResponseRedirect(reverse('record:detail', kwargs={'pk': practice_session.id}))
 
+
+def finish_practice_session_now(request, pk):
+  practice_session = get_object_or_404(PracticeSession, pk=pk)
+  print("TODO - logging framework - practiceType:{0} start:{1}".format(practice_session.type, practice_session.start))
+
+  practice_session.finish = datetime.datetime.utcnow().replace(tzinfo=utc)
+  practice_session.save()
+  return HttpResponseRedirect(reverse('record:detail', kwargs={'pk': practice_session.id}))
