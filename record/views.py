@@ -40,6 +40,7 @@ def create_practice_session_quick(request):
 
 
 def create_practice_session(request):
+  """ TODO - we can probably just gut this, I don't see a compeling reason for this specific workflow """
   print("TODO - logging framework - practiceType:{0} start:{1}".format(request.POST['practiceType'], request.POST['start']))
 
   practice_session = PracticeSession()
@@ -55,5 +56,17 @@ def finish_practice_session_now(request, pk):
   print("TODO - logging framework - practiceType:{0} start:{1}".format(practice_session.type, practice_session.start))
 
   practice_session.finish = datetime.datetime.utcnow().replace(tzinfo=utc)
+  practice_session.save()
+  return HttpResponseRedirect(reverse('record:detail', kwargs={'pk': practice_session.id}))
+
+
+def update_practice_session(request, pk):
+  practice_session = get_object_or_404(PracticeSession, pk=pk)
+  print("TODO - logging framework - practiceType:{0} start:{1}".format(practice_session.type, practice_session.start))
+  print(request.POST)
+
+  practice_session.type = request.POST['typeInput']
+  practice_session.start = request.POST['startInput']
+  practice_session.finish = request.POST['finishInput']
   practice_session.save()
   return HttpResponseRedirect(reverse('record:detail', kwargs={'pk': practice_session.id}))

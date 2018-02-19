@@ -38,24 +38,27 @@
     </div>
     {% endif %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <td scope="row">Type</td>
-                <td>{{ practice_session.type }}</td>
-            </tr>
-            <tr>
-                <td scope="row">Start</td>
-                <td>{{ practice_session.start }}</td>
-            </tr>
-            <tr>
-                <td scope="row">Finish</td>
-                <td>
-                    {{ practice_session.finish }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container border rounded">
+        <form action="{% url 'record:update' practice_session.id %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="typeInput">Type</label>
+                <input type="text" class="form-control" name="typeInput" id="typeInput" value="{{ practice_session.type }}">
+                <small class="form-text text-muted">The type of practice being performed.</small>
+            </div>
+            <div class="form-group">
+                <label for="startInput">Start</label>
+                <input type="text" class="form-control" name="startInput" id="startInput" value="{{ practice_session.start|date:"c"}}">
+            </div>
+            <div class="form-group">
+                <label for="finishInput">Finish</label>
+                <input type="text" class="form-control" name="finishInput" id="finishInput" value="{{ practice_session.finish|date:"c" }}">
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save fa-lg"></i> Save</button>
+
+        </form>
+    </div>
 
 
 <!-- Bootstrap core JavaScript ================================================== -->
