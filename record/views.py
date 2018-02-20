@@ -34,19 +34,6 @@ def create_practice_session_quick(request):
   practice_session = PracticeSession()
   practice_session.type = request.POST['practiceTypeQuick']
   practice_session.start = request.POST['startQuick']
-  #practice_session.finish = request.POST['finish']
-  practice_session.save()
-  return HttpResponseRedirect(reverse('record:detail', kwargs={'pk': practice_session.id}))
-
-
-def create_practice_session(request):
-  """ TODO - we can probably just gut this, I don't see a compeling reason for this specific workflow """
-  print("TODO - logging framework - practiceType:{0} start:{1}".format(request.POST['practiceType'], request.POST['start']))
-
-  practice_session = PracticeSession()
-  practice_session.type = request.POST['practiceType']
-  practice_session.start = request.POST['start']
-  #practice_session.finish = request.POST['finish']
   practice_session.save()
   return HttpResponseRedirect(reverse('record:detail', kwargs={'pk': practice_session.id}))
 
