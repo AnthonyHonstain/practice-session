@@ -42,6 +42,9 @@
             <th scope="col">Type</th>
             <th scope="col">Start</th>
             <th scope="col">Finish</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Feel</th>
+            <th scope="col">Attempts</th>
         </tr>
         </thead>
         <tbody>
@@ -50,6 +53,9 @@
             <td scope="row"><a href="{% url 'record:detail' practice_session.id %}"> {{ practice_session.type }}</a></td>
             <td>{{ practice_session.start }}</td>
             <td>{{ practice_session.finish }}</td>
+            <td>{{ practice_session.rating }}</td>
+            <td>{{ practice_session.feel }}</td>
+            <td>{{ practice_session.attemptCount }}</td>
         </tr>
         {% endfor %}
         </tbody>

@@ -55,5 +55,8 @@ def update_practice_session(request, pk):
   practice_session.type = request.POST['typeInput']
   practice_session.start = request.POST['startInput']
   practice_session.finish = request.POST['finishInput']
+  practice_session.rating = request.POST['ratingInput']
+  practice_session.feel = request.POST['feelInput']
+  practice_session.attemptCount = request.POST['attemptInput']
   practice_session.save()
   return HttpResponseRedirect(reverse('record:detail', kwargs={'pk': practice_session.id}))

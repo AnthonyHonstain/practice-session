@@ -55,8 +55,19 @@
                 <label for="finishInput">Finish</label>
                 <input type="text" class="form-control" name="finishInput" id="finishInput" value="{{ practice_session.finish|date:"c" }}">
             </div>
+            <div class="form-group">
+                <label for="ratingInput">Rating</label>
+                <input type="text" class="form-control" name="ratingInput" id="ratingInput" value="{{ practice_session.rating }}">
+            </div>
+            <div class="form-group">
+                <label for="feelInput">Feel</label>
+                <input type="text" class="form-control" name="feelInput" id="feelInput" value="{{ practice_session.feel }}">
+            </div>
+            <div class="form-group">
+                <label for="attemptInput">Attempts</label>
+                <input type="text" class="form-control" name="attemptInput" id="attemptInput" value="{{ practice_session.attemptCount }}">
+            </div>
             <button type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save fa-lg"></i> Save</button>
-
         </form>
     </div>
 
