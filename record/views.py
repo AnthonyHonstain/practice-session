@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.timezone import utc
 import datetime
 
@@ -25,6 +25,19 @@ class DetailView(generic.DetailView):
   def get_queryset(self):
     # TODO - leaving this for when I want to start building more rules about what details can be seen and when.
     return PracticeSession.objects.all()
+
+
+class CreateView(generic.CreateView):
+  model = PracticeSession
+  template_name = 'record/create.html'
+  fields = ['type']
+
+
+class UpdateView(generic.UpdateView):
+  model = PracticeSession
+  template_name = 'record/update.html'
+  fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
+  success_url = reverse_lazy('record:index', kwargs=None)
 
 
 def create_practice_session_quick(request):

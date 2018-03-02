@@ -4,7 +4,7 @@ from django.db import models
 class PracticeSession(models.Model):
   start = models.DateTimeField()
   finish = models.DateTimeField(null=True, blank=True)
-  type = models.CharField(max_length=20)
+  type = models.CharField(max_length=20, blank=False)
   rating = models.SmallIntegerField(null=True)
   feel = models.CharField(max_length=20, null=True)
   attemptCount = models.IntegerField(null=True)
