@@ -22,13 +22,13 @@
 <main role="main" class="container">
 
     <h1>Quick Start</h1>
-    <form name="quickSubmit" action="{% url 'record:createQuick' %}" method="post" onsubmit="DoSubmit();">
+    <form name="quickSubmit" action="{% url 'record:createClass' %}" method="post" onsubmit="DoSubmit();">
         {% csrf_token %}
 
         <label for="practiceTypeQuick">Practice Type</label>
-        <input type="text" name="practiceTypeQuick" id="practiceTypeQuick" value=""/>
+        <input type="text" name="type" id="type" value=""/>
 
-        <input type="hidden" name="startQuick" id="startQuick" value=""/>
+        <input type="hidden" name="start" id="start" value=""/>
 
         <input type="submit" class="btn btn-primary" value="Start"/>
     </form>
@@ -72,8 +72,8 @@
 <script src="{% static 'js/moment.min.js' %}"></script>
 <script>
     function DoSubmit() {
-      document.quickSubmit.startQuick.value = moment().toISOString();
-      console.log("Test moment.js startQuick:", document.quickSubmit.startQuick);
+      document.quickSubmit.start.value = moment().toISOString();
+      console.log("Test moment.js startQuick:", document.quickSubmit.start);
       return true;
     }
 

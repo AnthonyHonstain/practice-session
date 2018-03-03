@@ -30,14 +30,20 @@ class DetailView(generic.DetailView):
 class CreateView(generic.CreateView):
   model = PracticeSession
   template_name = 'record/create.html'
-  fields = ['type']
+  fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
+  success_url = reverse_lazy('record:index')
+
+  def form_valid(self, form):
+    temp = form.save(commit=False)
+    # TODO - still having difficult modify the form's validation logic
+    return super().form_valid(form)
 
 
 class UpdateView(generic.UpdateView):
   model = PracticeSession
   template_name = 'record/update.html'
   fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
-  success_url = reverse_lazy('record:index', kwargs=None)
+  success_url = reverse_lazy('record:index')
 
 
 def create_practice_session_quick(request):
