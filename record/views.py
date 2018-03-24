@@ -14,7 +14,7 @@ class IndexView(generic.ListView):
 
   def get_queryset(self):
     """Return the current sessions"""
-    return PracticeSession.objects.all()
+    return PracticeSession.objects.all().order_by('start')
 
 
 class DetailView(generic.DetailView):
