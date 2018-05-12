@@ -57,8 +57,8 @@
         {% for practice_session in practice_session_list %}
         <tr>
             <td scope="row"><a href="{% url 'record:updateClass' practice_session.id %}"> {{ practice_session.type }}</a></td>
-            <td>{{ practice_session.start }}</td>
-            <td>{{ practice_session.finish }}</td>
+            <td>{{ practice_session.start|date:"Y/m/d h:m:s" }}</td>
+            <td>{{ practice_session.finish|date:"Y/m/d h:m:s"}}</td>
             <td>{{ practice_session.rating }}</td>
             <td>{{ practice_session.feel }}</td>
             <td>{{ practice_session.attemptCount }}</td>
