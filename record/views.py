@@ -32,9 +32,10 @@ class UpdateForm(forms.ModelForm):
   # TODO - review this in detail https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/
   type = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
   start = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget())
-  finish = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget())
+  finish = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(), required=False)
   rating = forms.ChoiceField(widget=forms.RadioSelect(),
-                             choices=((1, 1), (2, 2), (3, 3)))
+                             choices=((1, 1), (2, 2), (3, 3)),
+                             required=False)
 
   class Meta:
     model = PracticeSession
@@ -44,7 +45,7 @@ class UpdateForm(forms.ModelForm):
 class CreateView(generic.CreateView):
   model = PracticeSession
   template_name = 'record/create.html'
-  #fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
+  context_object_name = 'practice_session'
   success_url = reverse_lazy('record:index')
   form_class = UpdateForm
 
@@ -57,9 +58,16 @@ class CreateView(generic.CreateView):
 class UpdateView(generic.UpdateView):
   model = PracticeSession
   template_name = 'record/update.html'
-  #fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
+  context_object_name = 'practice_session'
   success_url = reverse_lazy('record:index')
   form_class = UpdateForm
+
+  def form_valid(self, form):
+    #print(form)
+    temp = form.save(commit=False)
+    # TODO - still having difficult modify the form's validation logic
+    return super().form_valid(form)
+
 
 def create_practice_session_quick(request):
   print("TODO - logging framework - practiceTypeQuick:{0} startQuick:{1}"
@@ -78,7 +86,7 @@ def finish_practice_session_now(request, pk):
 
   practice_session.finish = datetime.datetime.utcnow().replace(tzinfo=utc)
   practice_session.save()
-  return HttpResponseRedirect(reverse('record:detail', kwargs={'pk': practice_session.id}))
+  return HttpResponseRedirect(reverse('record:updateClass', kwargs={'pk': practice_session.id}))
 
 
 def update_practice_session(request, pk):
