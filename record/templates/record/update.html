@@ -65,9 +65,7 @@
             <div class="form-group">
                 {{ form.rating.label }}
                 {{ form.rating.errors }}
-                {{ form.rating.value }}
 
-                <label for="ratingInput">Rating</label>
                 <div id="id_rating" class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-secondary {% if form.rating.value == 1 %}active{% endif %}">
                         <input type="radio" name="rating" id="id_rating_0" required_id="id_rating_0" value="1"
