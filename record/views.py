@@ -34,7 +34,7 @@ class UpdateForm(forms.ModelForm):
   start = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget())
   finish = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(), required=False)
   rating = forms.ChoiceField(widget=forms.RadioSelect(),
-                             choices=((1, 1), (2, 2), (3, 3)),
+                             choices=((1, 1), (2, 2), (3, 3), (4,4), (5,5)),
                              required=False)
 
   class Meta:
