@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django import forms
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.urls import reverse, reverse_lazy
@@ -27,11 +28,25 @@ class DetailView(generic.DetailView):
     return PracticeSession.objects.all()
 
 
+class UpdateForm(forms.ModelForm):
+  # TODO - review this in detail https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/
+  type = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+  start = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget())
+  finish = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget())
+  rating = forms.ChoiceField(widget=forms.RadioSelect(),
+                             choices=((1, 1), (2, 2), (3, 3)))
+
+  class Meta:
+    model = PracticeSession
+    fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
+
+
 class CreateView(generic.CreateView):
   model = PracticeSession
   template_name = 'record/create.html'
-  fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
+  #fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
   success_url = reverse_lazy('record:index')
+  form_class = UpdateForm
 
   def form_valid(self, form):
     temp = form.save(commit=False)
@@ -42,9 +57,9 @@ class CreateView(generic.CreateView):
 class UpdateView(generic.UpdateView):
   model = PracticeSession
   template_name = 'record/update.html'
-  fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
+  #fields = ['start', 'finish', 'type', 'rating', 'feel', 'attemptCount']
   success_url = reverse_lazy('record:index')
-
+  form_class = UpdateForm
 
 def create_practice_session_quick(request):
   print("TODO - logging framework - practiceTypeQuick:{0} startQuick:{1}"
