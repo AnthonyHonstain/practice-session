@@ -22,14 +22,20 @@
 <main role="main" class="container">
 
     <h1>Quick Start</h1>
-    <form name="quickSubmit" action="{% url 'record:createQuick' %}" method="post" onsubmit="DoSubmit();">
+    <form name="quickSubmit" action="{% url 'record:createClass' %}" method="post" onsubmit="DoSubmit();">
         {% csrf_token %}
 
         <label for="practiceTypeQuick">Practice Type</label>
-        <input type="text" name="practiceTypeQuick" id="practiceTypeQuick" value=""/>
+        <input type="text" name="type" id="type" value=""/>
 
-        <input type="hidden" name="startQuick" id="startQuick" value=""/>
-
+        <input type="hidden" name="start_0" id="id_start_0" value=""/>
+        <input type="hidden" name="start_1" id="id_start_1" value=""/>
+        {% comment %}
+        <!-- This is a pretty ghetto way of priming the pump, this is hacky and not a long term solution. -->
+        {% endcomment %}
+        <input type="hidden" name="rating" id="rating" value=2 />
+        <input type="hidden" name="feel" id="feel" value="Good" />
+        <input type="hidden" name="attemptCount" id="attemptCount" value=1 />
         <input type="submit" class="btn btn-primary" value="Start"/>
     </form>
 
@@ -50,7 +56,7 @@
         <tbody>
         {% for practice_session in practice_session_list %}
         <tr>
-            <td scope="row"><a href="{% url 'record:detail' practice_session.id %}"> {{ practice_session.type }}</a></td>
+            <td scope="row"><a href="{% url 'record:updateClass' practice_session.id %}"> {{ practice_session.type }}</a></td>
             <td>{{ practice_session.start }}</td>
             <td>{{ practice_session.finish }}</td>
             <td>{{ practice_session.rating }}</td>
@@ -72,8 +78,10 @@
 <script src="{% static 'js/moment.min.js' %}"></script>
 <script>
     function DoSubmit() {
-      document.quickSubmit.startQuick.value = moment().toISOString();
-      console.log("Test moment.js startQuick:", document.quickSubmit.startQuick);
+      //document.quickSubmit.start.value = moment().toISOString()
+      document.quickSubmit.start_0.value = moment().format("YYYY-MM-DD"); //https://github.com/moment/moment/issues/3455
+      document.quickSubmit.start_1.value = moment().format("hh:mm:ss"); //https://stackoverflow.com/questions/27978819/extract-time-from-moment-js-object
+      console.log("Test moment.js startQuick:", document.quickSubmit.start_0, document.quickSubmit.start_1);
       return true;
     }
 
