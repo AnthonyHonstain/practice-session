@@ -37,19 +37,6 @@ class IndexViewTests(TestCase):
     self.assertQuerysetEqual(response.context['practice_session_list'], [repr(r) for r in [session1, session2]])
 
 
-class DetailViewTests(TestCase):
-
-  def test_unknown_practice_session(self):
-    response = self.client.get(reverse('record:detail', kwargs={'pk': 1}))
-    self.assertEqual(response.status_code, 404)
-
-  def test_get_basic_practice_session(self):
-    session = create_practice_session('TestSession')
-    response = self.client.get(reverse('record:detail', kwargs={'pk': session.pk}))
-    self.assertEqual(response.status_code, 200)
-    self.assertEqual(response.context['practice_session'].type, session.type)
-
-
 class CreateViewTests(TestCase):
 
   def test_create_practice_session(self):
