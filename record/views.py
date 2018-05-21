@@ -34,7 +34,7 @@ class UpdateForm(forms.ModelForm):
   start = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget())
   finish = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(), required=False)
   rating = forms.ChoiceField(widget=forms.RadioSelect(),
-                             choices=((1, 1), (2, 2), (3, 3), (4,4), (5,5)),
+                             choices=((1, 1), (2, 2), (3, 3), (4, 4), (5, 5)),
                              required=False)
 
   class Meta:
@@ -50,6 +50,7 @@ class CreateView(generic.CreateView):
   form_class = UpdateForm
 
   def form_valid(self, form):
+    #print(form)
     temp = form.save(commit=False)
     # TODO - still having difficult modify the form's validation logic
     return super().form_valid(form)
