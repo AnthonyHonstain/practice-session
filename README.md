@@ -23,3 +23,11 @@ A Django 2.0 project for tracking practice times.
 - [Fontawesome](https://fontawesome.com/)
 - [Moment JS v2.20.0](https://momentjs.com/)
 - [Gijgo v1.9.3](https://github.com/atatanasov/gijgo)
+
+## Dev Instruction - Run Local
+
+```
+python manage.py collectstatic
+python manage.py test
+python manage.py runserver
+```
